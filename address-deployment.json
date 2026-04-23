@@ -1,0 +1,7 @@
+{
+  "network": "sepolia",
+  "shipmentTrackerProxy": "0x33F4a2E02975Fe83516d122F4DA807f71836aAA8",
+  "shipmentTrackerImplementation": "0x0b2DC81d5F9B3e010e0508de3a6b18A92585F68b",
+  "deploymentDate": "2026-04-22T14:52:46.784Z",
+  "contractName": "ShipmentTracker"
+}
