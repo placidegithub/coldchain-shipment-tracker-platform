@@ -38,7 +38,7 @@ const Dashboard = () => {
     if (t === null) return { label: "LOADING", color: "#9CA3AF", bg: "#F3F4F6", icon: "⏳", message: "Fetching latest data..." };
     if (t > 39) return { label: "CRITICAL BREACH", color: "#EF4444", bg: "#FEE2E2", icon: "🚨", message: "Immediate Action Required: Temperature exceeds safety limits. Data reverted at contract level." };
     if (t > 25) return { label: "MODERATE WARNING", color: "#F59E0B", bg: "#FEF3C7", icon: "⚠️", message: "Warning: Temperature approaching V2 threshold. Review sensor calibration." };
-    return { label: "OPTIMAL", color: "#10B981", bg: "#D1FAE5", icon: "✅", message: "Optimal cold chain maintained. All parameters within safe range." };
+    return { label: "OPTIMAL", color: "#A855F7", bg: "#F3E8FF", icon: "✅", message: "Optimal cold chain maintained. All parameters within safe range." };
   };
 
   const status = getStatus(temp);
@@ -48,7 +48,7 @@ const Dashboard = () => {
     if (temp === null) return "#9CA3AF";
     if (temp > 39) return "#EF4444";
     if (temp > 25) return "#F59E0B";
-    return "#10B981";
+    return "#A855F7";
   };
 
   const formatLastUpdated = () => {
@@ -61,76 +61,82 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <div className="page-title">
-        📦 Live Shipment Tracking
+    <div className="dashboard-page">
+      <div className="dashboard-hero">
+        <div className="dashboard-hero-copy">
+          <p className="dashboard-kicker">Cold Chain Intelligence</p>
+          <div className="page-title dashboard-title">
+            📦 Live Shipment Tracking
+          </div>
+          <p className="dashboard-subtitle">
+            A polished real-time view of shipment temperature, chain status, and safety threshold signals.
+          </p>
+        </div>
+
+        <div className="dashboard-metrics">
+          <div className="dashboard-metric metric-temp">
+            <span className="dashboard-metric-label">Current Temperature</span>
+            <strong style={{ color: getTemperatureColor() }}>{isLoading ? '---' : `${safeTemp}°C`}</strong>
+          </div>
+          <div className="dashboard-metric metric-status">
+            <span className="dashboard-metric-label">Status</span>
+            <strong>{status.label}</strong>
+          </div>
+          <div className="dashboard-metric metric-update">
+            <span className="dashboard-metric-label">Last Updated</span>
+            <strong>{lastUpdated ? formatLastUpdated() : 'Waiting...'}</strong>
+          </div>
+        </div>
       </div>
-      
-      <div className="grid-2">
-        {/* Temperature Card */}
-        <div className="card">
+
+      <div className="grid-2 dashboard-grid">
+        <div className="card dashboard-card dashboard-card-temperature">
           <div className="card-header">
             <span className="card-title">🌡️ Current Temperature</span>
             <span className="badge-success">Real-time</span>
           </div>
-          <div className="temp-display" style={{ color: getTemperatureColor() }}>
+          <div className="temp-display dashboard-temp-display" style={{ color: getTemperatureColor() }}>
             {isLoading ? '---' : `${safeTemp}°C`}
           </div>
-          <div style={{ marginTop: '0.75rem' }}>
-            <div style={{ 
-              height: '8px', 
-              background: '#E5E7EB', 
-              borderRadius: '4px',
-              overflow: 'hidden'
-            }}>
-              <div style={{ 
-                width: `${Math.min(100, (safeTemp / 50) * 100)}%`, 
-                height: '100%', 
-                background: `linear-gradient(90deg, ${getTemperatureColor()}, ${getTemperatureColor()})`,
-                borderRadius: '4px'
-              }} />
+          <div className="dashboard-progress-shell">
+            <div className="dashboard-progress-track">
+              <div
+                className="dashboard-progress-fill"
+                style={{
+                  width: `${Math.min(100, (safeTemp / 50) * 100)}%`,
+                  background: `linear-gradient(90deg, ${getTemperatureColor()}, #8B5CF6)`
+                }}
+              />
             </div>
           </div>
-          <p style={{ fontSize: '0.8rem', color: '#6B7280', marginTop: '0.75rem' }}>
-            Blockchain recorded value (Shipment ID #1)
+          <p className="dashboard-caption">
+            Blockchain recorded value for Shipment ID #1.
           </p>
           {lastUpdated && (
-            <p style={{ fontSize: '0.7rem', color: '#9CA3AF', marginTop: '0.5rem' }}>
+            <p className="dashboard-meta">
               Last updated: {formatLastUpdated()}
-              <span style={{ marginLeft: '0.5rem' }}>🔄 Auto-refresh every 10s</span>
+              <span className="dashboard-refresh">🔄 Auto-refresh every 10s</span>
             </p>
           )}
         </div>
 
-        {/* Status Card */}
-        <div className="card" style={{ borderLeft: `4px solid ${status.color}` }}>
+        <div className="card dashboard-card dashboard-card-status" style={{ borderLeft: `4px solid ${status.color}` }}>
           <div className="card-header">
             <span className="card-title">🔔 Network Status</span>
             {temp !== null && temp > 25 && (
               <span className="badge-warning">Action Required</span>
             )}
           </div>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            background: status.bg,
-            padding: '0.5rem 1.25rem',
-            borderRadius: '2rem',
-            color: status.color,
-            fontWeight: 700,
-            marginTop: '0.5rem'
-          }}>
-            <span style={{ fontSize: '1.1rem' }}>{status.icon}</span>
+          <div className="dashboard-status-pill" style={{ background: status.bg, color: status.color }}>
+            <span className="dashboard-status-icon">{status.icon}</span>
             <span>{status.label}</span>
           </div>
-          <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#6B7280', lineHeight: 1.5 }}>
+          <p className="dashboard-status-copy">
             {status.message}
           </p>
           {temp !== null && temp > 25 && (
             <button 
-              className="btn-secondary" 
-              style={{ marginTop: '1rem', fontSize: '0.8rem', padding: '0.5rem 1rem' }}
+              className="btn-secondary dashboard-audit-btn"
               onClick={() => window.location.href = '/audit'}
             >
               View Security Audit →
@@ -139,40 +145,29 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Threshold Legend */}
-      <div className="legend-container">
-        <div className="legend-item">
-          <span className="legend-dot" style={{ background: '#10B981' }}></span>
+      <div className="legend-container dashboard-legend">
+        <div className="legend-item dashboard-legend-item">
+          <span className="legend-dot" style={{ background: 'linear-gradient(135deg, #A855F7, #D946EF)' }}></span>
           <span>0-25°C: Optimal</span>
         </div>
-        <div className="legend-item">
-          <span className="legend-dot" style={{ background: '#F59E0B' }}></span>
+        <div className="legend-item dashboard-legend-item">
+          <span className="legend-dot" style={{ background: 'linear-gradient(135deg, #F59E0B, #F97316)' }}></span>
           <span>26-39°C: Moderate Warning</span>
         </div>
-        <div className="legend-item">
-          <span className="legend-dot" style={{ background: '#EF4444' }}></span>
+        <div className="legend-item dashboard-legend-item">
+          <span className="legend-dot" style={{ background: 'linear-gradient(135deg, #EF4444, #EC4899)' }}></span>
           <span>&gt;39°C: Critical Breach</span>
         </div>
       </div>
 
-      {/* Security Info Section */}
-      <div className="card" style={{ marginTop: '1.5rem', background: 'linear-gradient(135deg, #F0FDF4, #FFFFFF)' }}>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-          <div style={{ 
-            fontSize: '2rem',
-            background: '#D1FAE5',
-            width: '48px',
-            height: '48px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '1rem'
-          }}>
+      <div className="card dashboard-info-card" style={{ marginTop: '1.5rem' }}>
+        <div className="dashboard-info-layout">
+          <div className="dashboard-info-icon">
             🔒
           </div>
-          <div style={{ flex: 1 }}>
-            <h3 style={{ marginBottom: '0.5rem', color: '#065F46' }}>Immutable Record Protection</h3>
-            <p style={{ fontSize: '0.85rem', color: '#6B7280', lineHeight: 1.5 }}>
+          <div className="dashboard-info-copy">
+            <h3>Immutable Record Protection</h3>
+            <p>
               The smart contract implements <code>require(temp ≤ 25, "Temperature exceeds safety threshold!")</code>. 
               Blockchain immutability ensures that once data is recorded or rejected, it cannot be tampered with 
               by any party including drivers or logistics operators.
@@ -181,9 +176,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Error Display */}
       {error && (
-        <div className="alert-error" style={{ marginTop: '1rem' }}>
+        <div className="alert-error dashboard-error" style={{ marginTop: '1rem' }}>
           <span>⚠️ </span>
           {error}
         </div>
