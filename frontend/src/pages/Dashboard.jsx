@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
-const CONTRACT_ADDRESS = "0x33F4a2E02975Fe83516d122F4DA807f71836aAA8";
-const RPC_URL = "https://eth-sepolia.g.alchemy.com/v2/43BB0KpCnJSqwnBmX4EkO";
+const CONTRACT_ADDRESS = "0x640e88bAf48B4Ad473b6404F405Df158F3fee660";
+const RPC_URL = "https://eth-sepolia.g.alchemy.com/v2/LlO5U390LUPfc3ovvoF6m";
 const ABI = ["function shipmentTemperatures(uint256) public view returns (uint256)"];
 
 const Dashboard = () => {

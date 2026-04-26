@@ -1,7 +1,8 @@
 {
   "network": "sepolia",
-  "shipmentTrackerProxy": "0x33F4a2E02975Fe83516d122F4DA807f71836aAA8",
-  "shipmentTrackerImplementation": "0x0b2DC81d5F9B3e010e0508de3a6b18A92585F68b",
-  "deploymentDate": "2026-04-22T14:52:46.784Z",
-  "contractName": "ShipmentTracker"
+  "shipmentTrackerProxy": "0xF234c44317d7497ec0FdFd817DE70794A42818f0",
+  "shipmentTrackerImplementation": "0x0e007485aF343028cd17A5ecDC23e0C6F7E08592",
+  "deploymentDate": "2026-04-25T20:24:28.936Z",
+  "contractName": "ShipmentTrackerV2",
+  "upgradeDate": "2026-04-25T20:25:28.941Z"
 }
